@@ -27,13 +27,10 @@ const addItem = function(state, item) {
       index: state.currentIndex,
   });
 };
-const itemDone = function(state, index) {
-  //console.log(typeof index);
-    let obj = state.items.find(item => item.index === index);
-  //console.log(obj);
-    return obj.done = true;
+const itemToggle = function(state, index) {
+  let obj = state.items.find(item => item.index === index);
+  return (obj.done) ? (obj.done = false) : (obj.done = true);
 };
-
 const deleteItem = function(state, index){
     let obj = state.items.find(item => item.index === index);
     let i= state.items.indexOf(obj);
@@ -67,11 +64,11 @@ $('#js-shopping-list-form').submit(function(event){
 });
 $('.shopping-list').on('click', 'button.shopping-item-toggle', function(event) {
     const idBtn = Number($(event.currentTarget).closest('div.shopping-item-controls').attr('id'));
-    itemDone(appState, idBtn);
+    itemToggle(appState, idBtn);
     renderList(appState, $('.shopping-list'));
 });
 
-$('.shopping-list').on('click','.shopping-item-delete', function(event) {
+$('.shopping-list').on('click','button.shopping-item-delete', function(event) {
    const idBtn = Number($(event.currentTarget).closest('div.shopping-item-controls').attr('id'));
    deleteItem(appState, idBtn);
    renderList(appState, $('.shopping-list'));
