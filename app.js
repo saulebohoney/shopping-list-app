@@ -25,6 +25,11 @@ const addItem = function(state, item) {
     done: false
   });
 };
+const itemDone = function(state, itemName) {
+  state.items.find(function(item) {
+    return item.title === itemName;
+  })
+};
 
 //render functions
 const renderList = function(state, element) {
@@ -43,13 +48,21 @@ const renderList = function(state, element) {
   });
   element.html(itemsHTML);
 };
+// function if done: true, then strikethrough item.title
+
 
 //event listeners(function)
 $('#js-shopping-list-form').submit(function(event){
     event.preventDefault();
     addItem(appState, $('#shopping-list-entry').val());
     renderList(appState, $('.shopping-list'));
+    $(this)[0].reset();
 });
+$('.shopping-list').on('click', 'button.shopping-item-toggle', function(event) {
+  // call mod function that makes done: true
+  // call render function to addclass .shopping-item__checked to span
+});
+
 
 
 // addItem(appState, ${input}.val());
