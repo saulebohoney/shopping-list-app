@@ -1,29 +1,50 @@
 //appState
-const appState={
-
-    items:[]
-
+const appState = {
+    items:[
+      {title: 'apples', done: false}
+    ]
 };
-let item= 'pineapples';
-let test= function (item) {
-    return`<li>
-        <span class="shopping-item">${item}</span>
-        <div class="shopping-item-controls">
-          <button class="shopping-item-toggle">
-            <span class="button-label">check</span>
-          </button>
-          <button class="shopping-item-delete">
-            <span class="button-label">delete</span>
-          </button>
-        </div>
-      </li>`;
-};
-      
-console.log(test);
+// let test= function (item) {
+//     return`<li>
+//         <span class="shopping-item">${item}</span>
+//         <div class="shopping-item-controls">
+//           <button class="shopping-item-toggle">
+//             <span class="button-label">check</span>
+//           </button>
+//           <button class="shopping-item-delete">
+//             <span class="button-label">delete</span>
+//           </button>
+//         </div>
+//       </li>`;
+// };
 
 //state mod functions
+const addItem = function(state, item) {
+  state.items.push({
+    title: item,
+    done: false
+  });
+};
 
 //render functions
+const renderList = function(state, element) {
+  const itemsHTML = state.items.map(function(item) {
+    return `<li>
+             <span class="shopping-item">${item}</span>
+             <div class="shopping-item-controls">
+               <button class="shopping-item-toggle">
+                <span class="button-label">check</span>
+               </button>
+               <button class="shopping-item-delete">
+                <span class="button-label">delete</span>
+               </button>
+             </div>
+            </li>`;
+  });
+  element.html(itemsHTML);
+};
 
 //event listeners(function)
 
+
+// addItem(appState, ${input}.val());
