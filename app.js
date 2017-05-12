@@ -30,7 +30,7 @@ const addItem = function(state, item) {
 const renderList = function(state, element) {
   const itemsHTML = state.items.map(function(item) {
     return `<li>
-             <span class="shopping-item">${item}</span>
+             <span class="shopping-item">${item.title}</span>
              <div class="shopping-item-controls">
                <button class="shopping-item-toggle">
                 <span class="button-label">check</span>
@@ -45,6 +45,11 @@ const renderList = function(state, element) {
 };
 
 //event listeners(function)
+$('#js-shopping-list-form').submit(function(event){
+    event.preventDefault();
+    addItem(appState, $('#shopping-list-entry').val());
+    renderList(appState, $('.shopping-list'));
+});
 
 
 // addItem(appState, ${input}.val());
