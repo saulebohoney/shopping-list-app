@@ -1,9 +1,9 @@
 //appState
 const appState = {
-    items:[
-      {title: 'apples', done: false}
-    ]
+  currentIndex: 0,
+  items:[]
 };
+
 // let test= function (item) {
 //     return`<li>
 //         <span class="shopping-item">${item}</span>
@@ -20,23 +20,26 @@ const appState = {
 
 //state mod functions
 const addItem = function(state, item) {
+  state.currentIndex++
   state.items.push({
     title: item,
-    done: false
+    done: false,
+    index: state.currentIndex,
   });
 };
-const itemDone = function(state, itemName) {
-  state.items.find(function(item) {
-    return item.title === itemName;
-  })
+const itemDone = function(state, index) {
+  console.log(typeof index);
+  let obj = state.items.find(item => item.index === index);
+  console.log(obj);
+  return obj.done = true;
 };
 
 //render functions
 const renderList = function(state, element) {
   const itemsHTML = state.items.map(function(item) {
     return `<li>
-             <span class="shopping-item">${item.title}</span>
-             <div class="shopping-item-controls">
+             <span class="shopping-item ${(!item.done) ? null : 'shopping-item__checked'}">${item.title}</span>
+             <div class="shopping-item-controls" id=${item.index}>
                <button class="shopping-item-toggle">
                 <span class="button-label">check</span>
                </button>
@@ -48,8 +51,6 @@ const renderList = function(state, element) {
   });
   element.html(itemsHTML);
 };
-// function if done: true, then strikethrough item.title
-
 
 //event listeners(function)
 $('#js-shopping-list-form').submit(function(event){
@@ -59,8 +60,9 @@ $('#js-shopping-list-form').submit(function(event){
     $(this)[0].reset();
 });
 $('.shopping-list').on('click', 'button.shopping-item-toggle', function(event) {
-  // call mod function that makes done: true
-  // call render function to addclass .shopping-item__checked to span
+  const idBtn = Number($(event.currentTarget).closest('div.shopping-item-controls').attr('id'));
+  itemDone(appState, idBtn);
+  renderList(appState, $('.shopping-list'));
 });
 
 
